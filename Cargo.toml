@@ -10,9 +10,9 @@ git-fetch-with-cli = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-tonic = "0.3"
-prost = "0.6"
-tokio = { version = "0.3", features = ["full"] }
+tonic = "0.6.2"
+prost = "0.9.0"
+tokio = { version = "1.15.0", features = ["full"] }
 
 [build-dependencies]
-tonic-build = "0.3"
+tonic-build = "0.6.2"
