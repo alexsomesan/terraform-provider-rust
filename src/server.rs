@@ -1,3 +1,4 @@
+use prost::alloc::string::String;
 use std::collections::HashMap;
 use tonic::Response;
 
@@ -11,6 +12,8 @@ use tfplugin5_proto::provider_server::Provider;
 #[derive(Debug, Default)]
 pub struct MyProvider {}
 
+type Resources = HashMap<String, tfplugin5_proto::Schema>;
+
 #[tonic::async_trait]
 impl Provider for MyProvider {
     async fn get_schema(
@@ -18,12 +21,15 @@ impl Provider for MyProvider {
         _request: tonic::Request<tfplugin5_proto::get_provider_schema::Request>,
     ) -> Result<tonic::Response<tfplugin5_proto::get_provider_schema::Response>, tonic::Status>
     {
+        let resources: Resources = Resources::new();
+        let datasources: Resources = Resources::new();
+
         let resp = tfplugin5_proto::get_provider_schema::Response {
             provider: Option::None,
             provider_meta: Option::None,
             diagnostics: Vec::new(),
-            data_source_schemas: HashMap<String, tfplugin5_proto::Scheema>::new(),
-            resource_schemas: HashMap::new(),
+            data_source_schemas: datasources,
+            resource_schemas: resources,
         };
         Ok(Response::new(resp))
     }
